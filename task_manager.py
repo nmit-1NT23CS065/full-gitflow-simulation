@@ -21,9 +21,7 @@ class TaskManager:
         if not self.store_path.exists():
             return []
         try:
-            data = json.loads(
-                self.store_path.read_text(encoding="utf-8")
-            )
+            data = json.loads(self.store_path.read_text(encoding="utf-8"))
         except json.JSONDecodeError as exc:
             raise ValueError(
                 f"Task store is not valid JSON: {self.store_path}"
@@ -51,9 +49,7 @@ class TaskManager:
 
         tasks = self._read()
         task = {
-            "id": max(
-                (item.get("id", 0) for item in tasks), default=0
-            ) + 1,
+            "id": max((item.get("id", 0) for item in tasks), default=0) + 1,
             "title": clean_title,
             "priority": priority,
             "completed": False,
@@ -79,9 +75,7 @@ class TaskManager:
     def delete_task(self, task_id: int) -> None:
         """Delete a task by ID."""
         tasks = self._read()
-        remaining = [
-            task for task in tasks if task.get("id") != task_id
-        ]
+        remaining = [task for task in tasks if task.get("id") != task_id]
         if len(remaining) == len(tasks):
             raise KeyError(f"No task found with ID {task_id}.")
         self._write(remaining)
@@ -91,9 +85,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="A simple command-line task manager."
     )
-    subparsers = parser.add_subparsers(
-        dest="command", required=True
-    )
+    subparsers = parser.add_subparsers(dest="command", required=True)
 
     add_parser = subparsers.add_parser("add", help="Add a task.")
     add_parser.add_argument("title", help="Task title.")
@@ -110,9 +102,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     complete_parser.add_argument("task_id", type=int)
 
-    delete_parser = subparsers.add_parser(
-        "delete", help="Delete a task."
-    )
+    delete_parser = subparsers.add_parser("delete", help="Delete a task.")
     delete_parser.add_argument("task_id", type=int)
     return parser
 
@@ -143,7 +133,9 @@ def main() -> int:
                 )
         elif args.command == "complete":
             task = manager.complete_task(args.task_id)
-            print(f'Completed task #{task["id"]}: {task["title"]}')
+            print(
+                f'Completed task #{task["id"]}: {task["title"]}'
+            )
         elif args.command == "delete":
             manager.delete_task(args.task_id)
             print(f"Deleted task #{args.task_id}")
