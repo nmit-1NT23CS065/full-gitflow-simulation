@@ -78,3 +78,19 @@ Include screenshots or links for:
 ## Important
 
 This ZIP contains the project files and workflow guide. It does **not** create GitHub branches, pull requests, tags, or Actions runs automatically. You must perform the steps in the guide on your own GitHub repository so the evidence is real.
+
+
+## Task Priorities
+
+Each task supports three priority levels:
+
+- **low** — for tasks that can wait.
+- **normal** — for regular tasks (the default).
+- **high** — for urgent tasks.
+
+### Example
+
+```bash
+python task_manager.py add "Complete Gitflow simulation" --priority high
+```
+
