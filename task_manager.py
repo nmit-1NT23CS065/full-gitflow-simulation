@@ -1,5 +1,6 @@
+"""A small JSON-backed task manager."""
 
-"""A small JSON-backed task manager for the Full Gitflow Simulation project."""
+# Part of the Full Gitflow Simulation project.
 
 from __future__ import annotations
 
