@@ -37,9 +37,7 @@ class TaskManager:
             encoding="utf-8",
         )
 
-    def add_task(
-        self, title: str, priority: str = "normal"
-    ) -> dict[str, Any]:
+    def add_task(self, title: str, priority: str = "normal") -> dict[str, Any]:
         """Add a task and return it."""
         clean_title = title.strip()
         if not clean_title:
@@ -82,9 +80,7 @@ class TaskManager:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        description="A simple command-line task manager."
-    )
+    parser = argparse.ArgumentParser(description="A simple command-line task manager.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     add_parser = subparsers.add_parser("add", help="Add a task.")
@@ -97,9 +93,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     subparsers.add_parser("list", help="List all tasks.")
 
-    complete_parser = subparsers.add_parser(
-        "complete", help="Complete a task."
-    )
+    complete_parser = subparsers.add_parser("complete", help="Complete a task.")
     complete_parser.add_argument("task_id", type=int)
 
     delete_parser = subparsers.add_parser("delete", help="Delete a task.")
@@ -115,8 +109,8 @@ def main() -> int:
         if args.command == "add":
             task = manager.add_task(args.title, args.priority)
             print(
-                f'Added task #{task["id"]}: {task["title"]} '
-                f'(priority: {task["priority"]})'
+                f"Added task #{task['id']}: {task['title']} "
+                f"(priority: {task['priority']})"
             )
         elif args.command == "list":
             tasks = manager.list_tasks()
@@ -127,15 +121,10 @@ def main() -> int:
                 )
             for task in tasks:
                 status = "x" if task["completed"] else " "
-                print(
-                    f'[{status}] #{task["id"]} '
-                    f'[{task["priority"]}] {task["title"]}'
-                )
+                print(f"[{status}] #{task['id']} [{task['priority']}] {task['title']}")
         elif args.command == "complete":
             task = manager.complete_task(args.task_id)
-            print(
-                f'Completed task #{task["id"]}: {task["title"]}'
-            )
+            print(f"Completed task #{task['id']}: {task['title']}")
         elif args.command == "delete":
             manager.delete_task(args.task_id)
             print(f"Deleted task #{args.task_id}")
