@@ -83,3 +83,12 @@ def test_store_is_valid_json(tmp_path):
     manager.add_task("Persisted")
 
     assert json.loads(store.read_text(encoding="utf-8"))[0]["title"] == "Persisted"
+
+def test_empty_title_does_not_create_store(tmp_path):
+    store = tmp_path / "tasks.json"
+    manager = TaskManager(store)
+
+    with pytest.raises(ValueError, match="cannot be empty"):
+        manager.add_task("   ")
+
+    assert not store.exists()
